@@ -9,7 +9,7 @@
         - mode: 0644
 
 {% for name, src in ls.input.iteritems() %}
-{{ ls.config.path.config }}/00-input-{{ name }}:
+{{ ls.config.get('path.config') }}/00-input-{{ name }}.conf:
     file.managed:
         - source: {{ src }}
         - mode: 0644
@@ -17,8 +17,8 @@
         - group: root
 {% endfor %}
 
-{% for name, src in ls.input.iteritems() %}
-{{ ls.config.path.config }}/01-filter-{{ name }}:
+{% for name, src in ls.filter.iteritems() %}
+{{ ls.config.get('path.config') }}/01-filter-{{ name }}.conf:
     file.managed:
         - source: {{ src }}
         - mode: 0644
@@ -26,8 +26,8 @@
         - group: root
 {% endfor %}
 
-{% for name, src in ls.input.iteritems() %}
-{{ ls.config.path.config }}/02-output-{{ name }}:
+{% for name, src in ls.output.iteritems() %}
+{{ ls.config.get('path.config') }}/02-output-{{ name }}.conf:
     file.managed:
         - source: {{ src }}
         - mode: 0644
