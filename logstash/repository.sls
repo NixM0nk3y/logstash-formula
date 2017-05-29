@@ -1,6 +1,6 @@
 {% if salt['grains.get']('os_family') == 'Debian' %}
 
-add_elastic_repository:
+logstash_repository:
     pkg.installed:
         - name: apt-transport-https
 
@@ -14,7 +14,7 @@ add_elastic_repository:
 
 {% elif salt['grains.get']('os_family') == 'RedHat' %}
 
-add_elastic_repository:
+logstash_repository:
     pkgrepo.managed:
         - name: elastic
         - humanname: "Elastic repository for 5.x packages"
