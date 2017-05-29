@@ -1,0 +1,37 @@
+logstash:
+    sysconfig:
+        JAVACMD: "/usr/bin/java"
+        LS_HOME: "/usr/share/logstash"
+        LS_SETTINGS_DIR: "/etc/logstash"
+        LS_PIDFILE: "/var/run/logstash.pid"
+        LS_USER: "logstash"
+        LS_GROUP: "logstash"
+        LS_GC_LOG_FILE: "/var/log/logstash/gc.log"
+        LS_OPEN_FILES: "16384"
+        LS_NICE: "19"
+        SERVICE_NAME: "logstash"
+        SERVICE_DESCRIPTION: "logstash"
+    jvm_opts:
+        - "-Dfile.encoding=UTF-8"
+        - "-Djava.awt.headless=true"
+        - "-Xms256m"
+        - "-Xmx1g"
+        - "-XX:CMSInitiatingOccupancyFraction=75"
+        - "-XX:+DisableExplicitGC"
+        - "-XX:+HeapDumpOnOutOfMemoryError"
+        - "-XX:+UseCMSInitiatingOccupancyOnly"
+        - "-XX:+UseConcMarkSweepGC"
+        - "-XX:+UseParNewGC"
+    config:
+        path.config: /etc/logstash/conf.d
+        path.data: /var/lib/logstash
+        path.logs: /var/log/logstash
+        queue.max_bytes: 4gb
+        queue.type: persisted
+    input:
+        00kafka: salt://master/input/kafka.conf
+    filter:
+        00grok: salt://master/filter/grok.conf
+    output:
+        00elasticsearch: salt://master/output/elasticsearch.conf
+        01s3: salt://master/output/s3.conf
