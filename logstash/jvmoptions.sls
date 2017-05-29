@@ -3,6 +3,6 @@
 /etc/logstash/jvm.options:
     file.managed:
         - mode: 0644
-        - user: logstash
-        - group: logstash
+        - user: root
+        - group: root
         - contents: {{ ls.jvm_opts }}

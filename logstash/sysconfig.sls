@@ -3,9 +3,9 @@
 {{ ls.sysconfig_file }}:
     file.managed:
         - source: salt://logstash/templates/sysconfig.jinja
-        - user: logstash
-        - group: logstash
-        - mode: 0600
+        - user: root
+        - group: root
+        - mode: 0644
         - template: jinja
         - context:
             sysconfig: {{ ls.sysconfig }}
