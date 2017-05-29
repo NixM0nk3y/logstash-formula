@@ -26,12 +26,6 @@ logstash:
         path.config: /etc/logstash/conf.d
         path.data: /var/lib/logstash
         path.logs: /var/log/logstash
-        queue.max_bytes: 4gb
-        queue.type: persisted
-    input:
-        00kafka: salt://master/input/kafka.conf
-    filter:
-        00grok: salt://master/filter/grok.conf
-    output:
-        00elasticsearch: salt://master/output/elasticsearch.conf
-        01s3: salt://master/output/s3.conf
+    input: {}
+    filter: {}
+    output: {}
