@@ -18,8 +18,8 @@ Available states
 ``logstash``
 ------------
 
-It executes ``repository``, ``install``, ``config``, ``sysconfig``,
-``jvmoptions`` and ``service`` states.
+It executes ``repository``, ``install``, ``config``, ``patterns``,
+``sysconfig``, ``jvmoptions`` and ``service`` states.
 
 ``logstash.repository``
 -----------------------
@@ -54,11 +54,31 @@ configuration can be loaded from files defined under ``logstash:input``,
 
         filter:
             00grok: salt://path/to/grok.sls
-            
+
         output:
             00elasticsearch: salt://path/to/elasticsearch.conf
             01s3: salt://path/to/s3.conf
-        
+
+        ...
+
+``logstash.patterns``
+---------------------
+
+It defines the custom Grok patterns declared under ``logstash:patterns``
+pillar key. For each patterns group, a file named
+``/etc/logstash/patterns/<GROUPNAME>`` is created.
+
+.. code:: yaml
+
+    logstash:
+        ...
+        patterns:
+            syslog:
+                - 'SYSLOGBASE %{SYSLOGTIMESTAMP:timestamp} %{SYSLOGHOST:syslog_hostname} %{DATA:syslog_program}(?:\[%{POSINT:syslog_pid}\])?: %{GREEDYDATA:message}'
+            salt:
+                - 'SALTLOG_LEVEL (?:DEBUG|FATAL|ERROR|WARNING|INFO)'
+                - 'SALTCMD @?[a-z]\w+(?:\.@?[a-z]\w+)*'
+                - 'SALTLOGBASE %{TIMESTAMP_ISO8601:timestamp} \[%{SALTCMD:saltcmd}(?:([ \t]+)?)\]\[%{SALTLOG_LEVEL:priority}(?:[ \t]+)\] %{GREEDYDATA:message}'
         ...
 
 ``logstash.sysconfig``
