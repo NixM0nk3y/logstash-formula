@@ -9,6 +9,8 @@
         - mode: 0644
         - require:
           - pkg: logstash_install
+        - watch_in:
+          - service: logstash_running
 
 {% for name, src in ls.input.items() %}
 {{ ls.config.get('path.config') }}/1000-input-{{ name }}.conf:
@@ -20,6 +22,8 @@
         - template: jinja
         - require:
           - pkg: logstash_install
+        - watch_in:
+          - service: logstash_running
 {% endfor %}
 
 {% for name, src in ls.filter.items() %}
@@ -32,6 +36,8 @@
         - template: jinja
         - require:
           - pkg: logstash_install
+        - watch_in:
+          - service: logstash_running
 
 {% endfor %}
 
@@ -45,4 +51,6 @@
         - template: jinja
         - require:
           - pkg: logstash_install
+        - watch_in:
+          - service: logstash_running
 {% endfor %}
