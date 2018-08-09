@@ -7,30 +7,39 @@
         - user: root
         - group: root
         - mode: 0644
+        - require:
+          - pkg: logstash_install
 
 {% for name, src in ls.input.items() %}
-{{ ls.config.get('path.config') }}/00-input-{{ name }}.conf:
+{{ ls.config.get('path.config') }}/1000-input-{{ name }}.conf:
     file.managed:
         - source: {{ src }}
         - mode: 0644
         - user: root
         - group: root
+        - require:
+          - pkg: logstash_install
 {% endfor %}
 
 {% for name, src in ls.filter.items() %}
-{{ ls.config.get('path.config') }}/01-filter-{{ name }}.conf:
+{{ ls.config.get('path.config') }}/5000-filter-{{ name }}.conf:
     file.managed:
         - source: {{ src }}
         - mode: 0644
         - user: root
         - group: root
+        - require:
+          - pkg: logstash_install
+
 {% endfor %}
 
 {% for name, src in ls.output.items() %}
-{{ ls.config.get('path.config') }}/02-output-{{ name }}.conf:
+{{ ls.config.get('path.config') }}/8000-output-{{ name }}.conf:
     file.managed:
         - source: {{ src }}
         - mode: 0644
         - user: root
         - group: root
+        - require:
+          - pkg: logstash_install
 {% endfor %}
