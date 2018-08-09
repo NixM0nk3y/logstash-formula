@@ -5,7 +5,7 @@ logstash_repository:
         - name: apt-transport-https
 
     pkgrepo.managed:
-        - name: deb https://artifacts.elastic.co/packages/5.x/apt stable main
+        - name: deb https://artifacts.elastic.co/packages/6.x/apt stable main
         - file: /etc/apt/sources.list.d/elastic.list
         - gpgcheck: 1
         - key_url: https://artifacts.elastic.co/GPG-KEY-elasticsearch
