@@ -14,9 +14,10 @@
 {{ ls.config.get('path.config') }}/1000-input-{{ name }}.conf:
     file.managed:
         - source: {{ src }}
-        - mode: 0644
+        - mode: 0640
         - user: root
-        - group: root
+        - group: logstash
+        - template: jinja
         - require:
           - pkg: logstash_install
 {% endfor %}
@@ -25,9 +26,10 @@
 {{ ls.config.get('path.config') }}/5000-filter-{{ name }}.conf:
     file.managed:
         - source: {{ src }}
-        - mode: 0644
+        - mode: 0640
         - user: root
-        - group: root
+        - group: logstash
+        - template: jinja
         - require:
           - pkg: logstash_install
 
@@ -37,9 +39,10 @@
 {{ ls.config.get('path.config') }}/8000-output-{{ name }}.conf:
     file.managed:
         - source: {{ src }}
-        - mode: 0644
+        - mode: 0640
         - user: root
-        - group: root
+        - group: logstash
+        - template: jinja
         - require:
           - pkg: logstash_install
 {% endfor %}
